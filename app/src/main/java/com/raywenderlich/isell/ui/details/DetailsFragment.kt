@@ -33,7 +33,7 @@ package com.raywenderlich.isell.ui.details
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.transition.*
+import android.transition.Transition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +43,6 @@ import kotlinx.android.synthetic.main.content_details.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
-
-    private var item: Item? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -57,15 +55,28 @@ class DetailsFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolBar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        item = activity?.intent?.getParcelableExtra(getString(R.string.bundle_extra_item))
+        val item: Item? = activity?.intent?.getParcelableExtra(getString(R.string.bundle_extra_item))
         item?.let {
             populateDetails(item)
-
-            // Show share icon
-            if (!shareFab.isShown) {
-                shareFab.show()
-            }
+            setTrasnitionListener()
         }
+    }
+
+    private fun setTrasnitionListener() {
+        activity?.window?.sharedElementEnterTransition?.addListener(
+            object : Transition.TransitionListener {
+                override fun onTransitionStart(transition: Transition) {}
+                override fun onTransitionEnd(transition: Transition) {
+                    shareFab?.let {
+                        if (!shareFab.isShown) {
+                            shareFab.show()
+                        }
+                    }
+                }
+                override fun onTransitionCancel(transition: Transition) {}
+                override fun onTransitionPause(transition: Transition) {}
+                override fun onTransitionResume(transition: Transition) {}
+            })
     }
 
     /**

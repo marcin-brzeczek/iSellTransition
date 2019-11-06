@@ -32,7 +32,6 @@ package com.raywenderlich.isell.ui.list
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
@@ -44,8 +43,8 @@ import com.raywenderlich.isell.data.Category
 import com.raywenderlich.isell.data.Item
 import com.raywenderlich.isell.ui.add.AddItemActivity
 import com.raywenderlich.isell.ui.details.DetailsActivity
-import com.raywenderlich.isell.util.ItemsAdapter
 import com.raywenderlich.isell.util.DataProvider
+import com.raywenderlich.isell.util.ItemsAdapter
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity(), ItemsAdapter.OnItemClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -64,16 +63,16 @@ class ListActivity : AppCompatActivity(), ItemsAdapter.OnItemClickListener, Bott
 
         // Start activity with shared - transition animation
         val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this@ListActivity,
-                Pair.create<View, String>(
-                        itemView.findViewById(R.id.itemImageView),
-                        getString(R.string.transition_image)),
-                Pair.create<View, String>(
-                        itemView.findViewById(R.id.itemPrice),
-                        getString(R.string.transition_price)),
-                Pair.create<View, String>(
-                        itemView.findViewById(R.id.itemTitle),
-                        getString(R.string.transition_title)))
+            this@ListActivity,
+            Pair.create<View, String>(
+                itemView.findViewById(R.id.itemImageView),
+                getString(R.string.transition_image)),
+            Pair.create<View, String>(
+                itemView.findViewById(R.id.itemPrice),
+                getString(R.string.transition_price)),
+            Pair.create<View, String>(
+                itemView.findViewById(R.id.itemTitle),
+                getString(R.string.transition_title)))
         startActivity(detailsIntent, activityOptions.toBundle())
     }
 

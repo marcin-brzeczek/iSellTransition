@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    >
+
+<RelativeLayout
     android:id="@+id/addItemRootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/default_padding"
     tools:context=".ui.add.AddItemActivity">
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <FrameLayout
+        android:id="@+id/sceneContainer"
         android:layout_width="match_parent"
-        android:layout_height="@android:dimen/thumbnail_height"
-        android:scaleType="fitCenter" />
+        android:layout_height="@android:dimen/thumbnail_height">
+        <include layout="@layout/scene_item_image" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/categoryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageButton"
+        android:layout_below="@id/sceneContainer"
         android:layout_marginTop="@dimen/default_margin"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/category_title_padding"
@@ -29,7 +37,7 @@
         android:id="@+id/categorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageButton"
+        android:layout_below="@id/sceneContainer"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_toRightOf="@+id/categoryTitle" />
 
@@ -87,3 +95,4 @@
         android:onClick="onClickAddItem"
         android:text="@string/hint_add_item" />
 </RelativeLayout>
+</ScrollView>

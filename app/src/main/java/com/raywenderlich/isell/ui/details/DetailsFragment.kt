@@ -33,6 +33,7 @@ package com.raywenderlich.isell.ui.details
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.transition.ChangeImageTransform
 import android.transition.Transition
 import android.view.LayoutInflater
 import android.view.View
@@ -58,8 +59,28 @@ class DetailsFragment : Fragment() {
         val item: Item? = activity?.intent?.getParcelableExtra(getString(R.string.bundle_extra_item))
         item?.let {
             populateDetails(item)
-            setTrasnitionListener()
+            setListeners()
         }
+    }
+
+    private fun setListeners() {
+        itemImageView.setOnClickListener { setImageViewListener() }
+        setTrasnitionListener()
+    }
+
+    private fun setImageViewListener() {
+        val changeImageAnimation = ChangeImageTransform()
+        val galleryFragment = GalleryFragment()
+        galleryFragment.sharedElementEnterTransition = changeImageAnimation
+        galleryFragment.sharedElementReturnTransition = changeImageAnimation
+
+        fragmentManager?.beginTransaction()
+            ?.addSharedElement(itemImageView, itemImageView.transitionName)
+            ?.replace((view?.parent as ViewGroup).id,
+                galleryFragment,
+                GalleryFragment::class.java.simpleName)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 
     private fun setTrasnitionListener() {
